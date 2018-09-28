@@ -29,7 +29,7 @@ public class RedisUtil {
      * @param time 时间(秒)
      * @return
      */
-    public static  boolean expire(String key, long time) {
+    public static boolean expire(String key, long time) {
         try {
             if (time > 0) {
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);
@@ -47,7 +47,7 @@ public class RedisUtil {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public static  long getExpire(String key) {
+    public static long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
@@ -57,7 +57,7 @@ public class RedisUtil {
      * @param key 键
      * @return true 存在 false不存在
      */
-    public static  boolean hasKey(String key) {
+    public static boolean hasKey(String key) {
         try {
             return redisTemplate.hasKey(key);
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class RedisUtil {
      * @param key 可以传一个值 或多个
      */
     @SuppressWarnings("unchecked")
-    public static  void del(String... key) {
+    public static void del(String... key) {
         if (key != null && key.length > 0) {
             if (key.length == 1) {
                 redisTemplate.delete(key[0]);
