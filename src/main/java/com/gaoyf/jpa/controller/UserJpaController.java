@@ -2,11 +2,10 @@ package com.gaoyf.jpa.controller;
 
 import com.gaoyf.jpa.entity.User;
 import com.gaoyf.jpa.service.UserJpaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,12 +14,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user-jpa")
+@Api(tags = "user-jpa", description = "用户操作")
 public class UserJpaController {
 
     @Autowired
     private UserJpaService userJpaService;
 
-    @RequestMapping("/getList")
+    @GetMapping("/getList")
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
     public List<User> getList() {
         return userJpaService.getList();
     }
@@ -37,7 +38,7 @@ public class UserJpaController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void delete(Integer id) {
-         userJpaService.delete(id);
+        userJpaService.delete(id);
     }
 
 }
