@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <springProperty scope="context" name="logBase" source="logback.filePath"/>
+    <!-- appender -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %m%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 路由日志配置 -->
+    <appender name="operationLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logBase}/operation.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logBase}/%d{yyyy-MM-dd}/operation-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <!-- <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>1MB</maxFileSize>
+            </triggeringPolicy> -->
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level-%msg %n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+            <ImmediateFlush>true</ImmediateFlush>
+        </encoder>
+    </appender>
+    <appender name="exceptionLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logBase}/exception.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logBase}/%d{yyyy-MM-dd}/exception-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <!-- <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>1MB</maxFileSize>
+            </triggeringPolicy> -->
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %msg %n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+            <ImmediateFlush>true</ImmediateFlush>
+        </encoder>
+    </appender>
+
+    <!-- additivity为false不向root控制台输出 -->
+    <logger name="operationLog" additivity="false" level="INFO">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="operationLogAppender"/>
+    </logger>
+    <logger name="exceptionLog" additivity="false" level="error">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="exceptionLogAppender"/>
+    </logger>
+
+    <!-- root 默认日志配置 -->
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+    <logger name="org.springframework" level="INFO"/>
+</configuration>
