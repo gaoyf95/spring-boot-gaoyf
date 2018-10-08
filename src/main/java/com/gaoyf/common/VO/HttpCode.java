@@ -1,9 +1,12 @@
 package com.gaoyf.common.VO;
 
+import lombok.Getter;
+
 /**
- * Created by 高宇飞 on 2018/4/2 14:54:35
+ * Created by 高宇飞 on 2018/10/7 14:54:35
  */
-public enum HttpCode {
+@Getter
+public enum HttpCode implements BaseEnum {
 
     /**
      * 请求成功
@@ -13,7 +16,7 @@ public enum HttpCode {
     /**
      * 参数异常
      */
-    PARAM_ERROR("40", "参数异常"),
+    PARAM_ERROR("400", "参数异常"),
 
     /**
      * 请求失败
@@ -21,45 +24,29 @@ public enum HttpCode {
     FAILURE("404", "请求失败"),
 
     /**
-     * 请求成功
+     * 登陆信息已失效
      */
-    FORBIDDEN("403", "登陆信息已失效"),;
+    FORBIDDEN("403", "登陆信息已失效");
 
 
-    private String value;
-    private String content;
+    private String code;
+    private String message;
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    HttpCode(String value, String content) {
-        this.value = value;
-        this.content = content;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    HttpCode(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     /**
      * 根据类型值获取类型名称
      *
-     * @param value 类型值
+     * @param code 类型值
      * @return 类型名称
      */
-    public static String getContent(String value) {
+    public static String getContent(String code) {
         for (HttpCode httpCode : HttpCode.values()) {
-            if (httpCode.getValue().equals(value)) {
-                return httpCode.getContent();
+            if (httpCode.getCode().equals(code)) {
+                return httpCode.getMessage();
             }
         }
         return null;

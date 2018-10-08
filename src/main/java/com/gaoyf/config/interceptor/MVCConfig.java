@@ -15,6 +15,7 @@ public class MVCConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthorityInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new SysLogInterceptor()).addPathPatterns("/**");
     }
 
     @Override

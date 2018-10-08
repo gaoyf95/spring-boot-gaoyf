@@ -1,5 +1,7 @@
 package com.gaoyf.jpa.controller;
 
+import com.gaoyf.config.interfaces.Function;
+import com.gaoyf.config.interfaces.Module;
 import com.gaoyf.jpa.entity.User;
 import com.gaoyf.jpa.service.UserJpaService;
 import io.swagger.annotations.Api;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user-jpa")
 @Api(tags = "user-jpa", description = "用户操作")
+@Module("用户管理")
 public class UserJpaController {
 
     @Autowired
@@ -22,6 +25,7 @@ public class UserJpaController {
 
     @GetMapping("/getList")
     @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
+    @Function("获取用户列表")
     public List<User> getList() {
         return userJpaService.getList();
     }

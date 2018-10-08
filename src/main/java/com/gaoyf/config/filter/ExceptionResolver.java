@@ -3,7 +3,7 @@ package com.gaoyf.config.filter;
 import com.alibaba.fastjson.JSON;
 import com.gaoyf.common.VO.HttpCode;
 import com.gaoyf.common.VO.JsonResult;
-import com.gaoyf.common.exception.BussinessException;
+import com.gaoyf.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -30,9 +30,6 @@ import java.util.List;
 @Component
 public class ExceptionResolver implements HandlerExceptionResolver {
 
-    /**
-     * 异常日志
-     */
     private static final Logger logger = LoggerFactory.getLogger("exceptionLog");
 
     @Override
@@ -42,17 +39,18 @@ public class ExceptionResolver implements HandlerExceptionResolver {
         JsonResult jsonResult = new JsonResult();
         StringBuilder sb = new StringBuilder();
 
+        // 拦截的方法名称
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
+        MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
+        logger.error("【实体类】:" + handlerMethod.getBeanType().toString());
+        logger.error("【方法名】:" + method.getName());
+
         if (ex instanceof BindException) {
             resolverBindException(ex, sb, jsonResult);
-        } else if (ex instanceof BussinessException) {
-            resolverBussinessException(ex, sb, jsonResult);
+        } else if (ex instanceof BusinessException) {
+            resolverBusinessException(ex, sb, jsonResult);
         } else {
-            // 拦截的方法名称
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
-            logger.error("【实体类】:" + handlerMethod.getBeanType().toString());
-            logger.error("【方法名】:" + method.getName());
             if (methodParameters.length > 0) {
                 for (MethodParameter methodParameter : methodParameters) {
                     logger.error("【参数名】：" + methodParameter.getParameterName());
@@ -77,10 +75,11 @@ public class ExceptionResolver implements HandlerExceptionResolver {
     /**
      * 处理业务层异常
      */
-    private void resolverBussinessException(Throwable e, StringBuilder sb, JsonResult jsonResult) {
-        BussinessException businessException = (BussinessException) e;
-        sb.append(businessException.getBaseEnum().getMsg());
-        addResult(jsonResult, businessException.getBaseEnum().getCode(), businessException.getBaseEnum().getMsg());
+    private void resolverBusinessException(Throwable e, StringBuilder sb, JsonResult jsonResult) {
+        BusinessException businessException = (BusinessException) e;
+        logger.error("【异常信息】：" + businessException.getBaseEnum().getMessage());
+        sb.append(businessException.getBaseEnum().getMessage());
+        addResult(jsonResult, businessException.getBaseEnum().getCode(), businessException.getBaseEnum().getMessage());
     }
 
     /**
@@ -96,7 +95,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
             sb.append("字段");
             sb.append(error.getDefaultMessage());
         }
-        addResult(jsonResult, HttpCode.PARAM_ERROR.getValue(), HttpCode.PARAM_ERROR.getContent());
+        addResult(jsonResult, HttpCode.PARAM_ERROR.getCode(), HttpCode.PARAM_ERROR.getMessage());
     }
 
     /**
@@ -104,7 +103,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
      */
     private void resolverOtherException(final Throwable e, StringBuilder sb, JsonResult jsonResult) {
         sb.append(e.getMessage());
-        addResult(jsonResult, HttpCode.FAILURE.getValue(), HttpCode.FAILURE.getContent());
+        addResult(jsonResult, HttpCode.FAILURE.getCode(), HttpCode.FAILURE.getMessage());
     }
 
     /**

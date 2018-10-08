@@ -1,10 +1,10 @@
 package com.gaoyf.common.VO;
 
 /**
- * Created by 高宇飞 on 2018/4/2 14:54:35
+ * Created by 高宇飞 on 2018/10/7 14:54:35
  * 通用枚举信息接口
  */
-public interface IBaseEnum {
+public interface BaseEnum {
 
     /**
      * 获取状态码
@@ -18,5 +18,5 @@ public interface IBaseEnum {
      *
      * @return 消息
      */
-    String getMsg();
+    String getMessage();
 }

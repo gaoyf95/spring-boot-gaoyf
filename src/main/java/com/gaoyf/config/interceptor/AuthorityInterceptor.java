@@ -64,8 +64,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
      * 记录文本日志
      */
     private void logOperation(String path, String parameters) {
-        String log;
-        log = "【请求:】" + "[INFO]-" + path + "-" + parameters;
+        String log = "【请求:】" + "[INFO]-" + path + "-" + parameters;
         logger.info(log);
     }
 }

@@ -1,4 +1,4 @@
-package com.gaoyf.swagger;
+package com.gaoyf.util.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

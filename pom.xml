@@ -108,6 +108,14 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.2</version>
         </dependency>
+        <!--基础工具类-->
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>

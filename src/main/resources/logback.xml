@@ -27,6 +27,7 @@
             <ImmediateFlush>true</ImmediateFlush>
         </encoder>
     </appender>
+    <!-- 异常日志配置 -->
     <appender name="exceptionLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logBase}/exception.log</file>
         <append>true</append>
@@ -35,9 +36,21 @@
             </FileNamePattern>
             <maxHistory>365</maxHistory>
         </rollingPolicy>
-        <!-- <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                <maxFileSize>1MB</maxFileSize>
-            </triggeringPolicy> -->
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %msg %n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+            <ImmediateFlush>true</ImmediateFlush>
+        </encoder>
+    </appender>
+    <!-- 用户操作日志配置 -->
+    <appender name="handledLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logBase}/handled.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logBase}/%d{yyyy-MM-dd}/handled-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss} %msg %n</Pattern>
             <charset>UTF-8</charset> <!-- 此处设置字符集 -->
@@ -50,9 +63,13 @@
         <appender-ref ref="stdout"/>
         <appender-ref ref="operationLogAppender"/>
     </logger>
-    <logger name="exceptionLog" additivity="false" level="error">
+    <logger name="exceptionLog" additivity="false" level="ERROR">
         <appender-ref ref="stdout"/>
         <appender-ref ref="exceptionLogAppender"/>
+    </logger>
+    <logger name="handledLog" additivity="false" level="INFO">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="handledLogAppender"/>
     </logger>
 
     <!-- root 默认日志配置 -->
