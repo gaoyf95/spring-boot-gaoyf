@@ -1,4 +1,4 @@
-package com.gaoyf.resultful.entity;
+package com.gaoyf.resultful.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -10,8 +10,10 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class User {
-    private Integer id;
+    private String id;
     @NotNull(message = "名称不能为空")
     @Length(max = 10,message = "名称最大长度为10")
     private String name;
+    private Integer age;
+    private String sex;
 }

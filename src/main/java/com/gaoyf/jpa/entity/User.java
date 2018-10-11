@@ -1,6 +1,7 @@
 package com.gaoyf.jpa.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,10 @@ import javax.persistence.Id;
 @Entity
 public class User {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
     private String name;
+    private Integer age;
+    private String sex;
 }

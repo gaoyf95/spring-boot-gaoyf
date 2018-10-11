@@ -21,7 +21,7 @@ public class UserJpaService {
         return IterableUtils.toList(userJpaRepository.findAll());
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         return userJpaRepository.findById(id).get();
     }
 
@@ -29,7 +29,7 @@ public class UserJpaService {
         return userJpaRepository.save(user);
     }
 
-    public void delete(Integer id) {
+    public void delete(String id) {
         userJpaRepository.deleteById(id);
     }
 }

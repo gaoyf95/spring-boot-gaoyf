@@ -1,6 +1,6 @@
 package com.gaoyf.resultful.service;
 
-import com.gaoyf.resultful.entity.User;
+import com.gaoyf.resultful.model.User;
 import com.gaoyf.resultful.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.getList();
     }
 
-    public User getUserById(Integer id){
+    public User getUserById(String id){
         return userRepository.getUserById(id);
     }
 

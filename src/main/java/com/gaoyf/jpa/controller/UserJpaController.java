@@ -31,7 +31,7 @@ public class UserJpaController {
     }
 
     @RequestMapping(value = "/getUserById/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable Integer id) {
+    public User getUserById(@PathVariable String id) {
         return userJpaService.getUserById(id);
     }
 
@@ -41,7 +41,7 @@ public class UserJpaController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public void delete(Integer id) {
+    public void delete(String id) {
         userJpaService.delete(id);
     }
 

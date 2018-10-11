@@ -1,6 +1,6 @@
 package com.gaoyf.resultful.controller;
 
-import com.gaoyf.resultful.entity.User;
+import com.gaoyf.resultful.model.User;
 import com.gaoyf.resultful.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -40,7 +40,7 @@ public class UserController {
      * @return 用户实体
      */
     @RequestMapping(value = "/getUserById/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable Integer id) {
+    public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
@@ -51,7 +51,7 @@ public class UserController {
      * @return 用户
      */
     @RequestMapping(value = "/getUserById2", method = RequestMethod.GET)
-    public User getUserById2(@NotNull(message = "id不能为空") Integer id) {
+    public User getUserById2(@NotNull(message = "id不能为空") String id) {
         return userService.getUserById(id);
     }
 

@@ -1,6 +1,6 @@
 package com.gaoyf.resultful.repositories;
 
-import com.gaoyf.resultful.entity.User;
+import com.gaoyf.resultful.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +27,7 @@ public class UserRepository {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         String sql = "select * from user where  id = ?";
         List<User> query = jdbcTemplate.query(sql, new Object[]{id}, new BeanPropertyRowMapper<>(User.class));
         return query.size() > 0 ? query.get(0) : new User();
@@ -40,7 +40,7 @@ public class UserRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rc = namedParameterJdbcTemplate.update(sql, paramSource, keyHolder);
         if (rc > 0) {
-            user.setId(keyHolder.getKey().intValue());
+            user.setId(keyHolder.getKey().toString());
             return user;
         } else {
             return new User();
