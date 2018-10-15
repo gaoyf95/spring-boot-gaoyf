@@ -4,16 +4,14 @@ import com.gaoyf.resultful.model.User;
 import com.gaoyf.resultful.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by 高宇飞 on 2018/9/27 16:42:05
@@ -65,21 +63,4 @@ public class UserController {
     public User save(@Valid User user) {
         return userService.save(user);
     }
-
-    /**
-     * 拦截验证之后的异常信息  可以写到公共拦截器中
-     *
-     * @param cve
-     * @return
-     */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public Map handleConstraintViolationException(ConstraintViolationException cve) {
-        Set<ConstraintViolation<?>> cves = cve.getConstraintViolations();
-        Map map = new HashMap();
-        for (ConstraintViolation<?> constraintViolation : cves) {
-            map.put("message", constraintViolation.getMessage());
-        }
-        return map;
-    }
-
 }

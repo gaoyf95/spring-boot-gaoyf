@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by 高宇飞 on 2018/9/29 11:47:55
+ * 编码、压缩拦截器
+ */
+
 @Order(1)
 @WebFilter(filterName = "GzipJsFilter", urlPatterns = "/*")
 public class GzipJsFilter implements Filter {

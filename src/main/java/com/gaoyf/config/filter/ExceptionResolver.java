@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * Created by 高宇飞 on 2018/9/29 10:47:55
+ * 全局异常拦截器
  */
 
 @Order(-1000)

@@ -1,4 +1,4 @@
-package com.gaoyf.resultful.repositories;
+package com.gaoyf.resultful.dao;
 
 import com.gaoyf.resultful.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

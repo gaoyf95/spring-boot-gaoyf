@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * Created by 高宇飞 on 2018/10/7 14:54:35
+ * 封装HTTP状态码
  */
 @Getter
 public enum HttpCode implements BaseEnum {

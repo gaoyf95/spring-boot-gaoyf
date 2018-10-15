@@ -1,7 +1,7 @@
 package com.gaoyf.resultful.service;
 
 import com.gaoyf.resultful.model.User;
-import com.gaoyf.resultful.repositories.UserRepository;
+import com.gaoyf.resultful.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

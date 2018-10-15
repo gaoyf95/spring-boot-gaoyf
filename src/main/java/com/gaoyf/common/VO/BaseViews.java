@@ -2,7 +2,7 @@ package com.gaoyf.common.VO;
 
 /**
  * Created by 高宇飞 on 2015/10/11.
- * 基础Views
+ * 基础Views(基于JsonView)
  */
 public final class BaseViews {
     /**

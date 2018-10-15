@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Created by 高宇飞 on 2018/9/29 10:47:55
+ * 跨域
  */
 @WebFilter(filterName = "CrossDomainFilter", urlPatterns = "/*")
 public class CrossDomainFilter implements Filter {
