@@ -1,12 +1,12 @@
 package com.gaoyf.config.interceptor;
 
+import com.gaoyf.util.request.OperaParamUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * Created by 高宇飞 on 2018/9/29 10:10:24
@@ -21,7 +21,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
         String path = request.getServletPath();
         path = path.substring(1);
-        String parameters = getOperaParams(request);
+        String parameters = OperaParamUtil.getOperaParams(request);
         //记日志
         try {
             logOperation(path, parameters);
@@ -41,24 +41,6 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         return true;
     }
     //其他postHandle,afterCompletion空继承
-
-    /**
-     * 获取Request的参数，并将其"Key=Value&Key=Value"的格式返回
-     *
-     * @param request 请求
-     * @return "Key=Value&Key=Value"格式的字符串
-     */
-    private static String getOperaParams(HttpServletRequest request) {
-        StringBuilder parameters = new StringBuilder();// 定义所有参数值
-        Map<String, String[]> map = request.getParameterMap();
-        // /取得所有参数值，用&号组装起来
-        Object[] obj;
-        obj = map.keySet().toArray();
-        for (Object anObj : obj) {
-            parameters.append(anObj.toString()).append("=").append(request.getParameter(anObj.toString())).append("&");
-        }
-        return parameters.toString();
-    }
 
     /**
      * 记录文本日志

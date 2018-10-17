@@ -2,6 +2,7 @@ package com.gaoyf.resultful.controller;
 
 import com.gaoyf.resultful.model.User;
 import com.gaoyf.resultful.service.UserService;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +50,7 @@ public class UserController {
      * @return 用户
      */
     @RequestMapping(value = "/getUserById2", method = RequestMethod.GET)
-    public User getUserById2(@NotNull(message = "id不能为空") String id) {
+    public User getUserById2(@Length(message = "id长度最大为32",max = 32) String id, @NotNull(message = "名称不能为空") String name) {
         return userService.getUserById(id);
     }
 

@@ -1,7 +1,7 @@
 package com.gaoyf.resultful.service;
 
+import com.gaoyf.resultful.dao.UserDao;
 import com.gaoyf.resultful.model.User;
-import com.gaoyf.resultful.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +14,17 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDao userDao;
 
     public List<User> getList(){
-        return userRepository.getList();
+        return userDao.getList();
     }
 
     public User getUserById(String id){
-        return userRepository.getUserById(id);
+        return userDao.getUserById(id);
     }
 
     public User save(User user) {
-        return userRepository.save(user);
+        return userDao.save(user);
     }
 }

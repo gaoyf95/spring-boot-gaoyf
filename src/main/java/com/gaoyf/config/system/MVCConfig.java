@@ -1,5 +1,8 @@
-package com.gaoyf.config.interceptor;
+package com.gaoyf.config.system;
 
+import com.gaoyf.config.interceptor.AuthorityInterceptor;
+import com.gaoyf.config.interceptor.SysLogInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,7 +27,11 @@ public class MVCConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 
+    @Bean
+    public SysLogInterceptor myInterceptor() {
+        return new SysLogInterceptor();
     }
 
 }

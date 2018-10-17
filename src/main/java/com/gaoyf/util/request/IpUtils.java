@@ -1,4 +1,4 @@
-package com.gaoyf.util.ip;
+package com.gaoyf.util.request;
 
 import org.apache.commons.lang3.StringUtils;
 

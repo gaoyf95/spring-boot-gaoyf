@@ -18,16 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 高宇飞 on 2018/9/29 10:47:55
  * 全局异常拦截器
  */
 
-@Order(-1000)
+@Order(-500)
 @Component
 public class ExceptionResolver implements HandlerExceptionResolver {
 
@@ -36,21 +39,20 @@ public class ExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request,
                                          HttpServletResponse response, Object handler, Exception ex) {
-
         JsonResult jsonResult = new JsonResult();
         StringBuilder sb = new StringBuilder();
-
         // 拦截的方法名称
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
         logger.error("【实体类】:" + handlerMethod.getBeanType().toString());
         logger.error("【方法名】:" + method.getName());
-
         if (ex instanceof BindException) {
             resolverBindException(ex, sb, jsonResult);
         } else if (ex instanceof BusinessException) {
             resolverBusinessException(ex, sb, jsonResult);
+        } else if (ex instanceof ConstraintViolationException) {
+            constraintViolationException(ex, jsonResult);
         } else {
             if (methodParameters.length > 0) {
                 for (MethodParameter methodParameter : methodParameters) {
@@ -71,6 +73,18 @@ public class ExceptionResolver implements HandlerExceptionResolver {
             logger.error("与客户端通讯异常：" + e.getMessage(), e);
         }
         return new ModelAndView();
+    }
+
+    /**
+     * 处理参数验证异常
+     */
+    private void constraintViolationException(Exception ex, JsonResult jsonResult) {
+        ConstraintViolationException cve = (ConstraintViolationException) ex;
+        Set<ConstraintViolation<?>> constraintViolations = cve.getConstraintViolations();
+        for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+            logger.error("【异常信息】：" + constraintViolation.getMessage());
+        }
+        addResult(jsonResult, HttpCode.PARAM_ERROR.getCode(), HttpCode.PARAM_ERROR.getMessage());
     }
 
     /**
@@ -95,6 +109,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
             sb.append(error.getField());
             sb.append("字段");
             sb.append(error.getDefaultMessage());
+            logger.error("【异常信息】：" + error.getObjectName() + "中" + error.getField() + error.getDefaultMessage());
         }
         addResult(jsonResult, HttpCode.PARAM_ERROR.getCode(), HttpCode.PARAM_ERROR.getMessage());
     }

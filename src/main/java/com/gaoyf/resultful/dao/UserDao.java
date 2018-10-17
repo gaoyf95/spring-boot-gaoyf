@@ -17,7 +17,7 @@ import java.util.List;
  * Created by 高宇飞 on 2018/9/27 17:21:33
  */
 @Repository
-public class UserRepository {
+public class UserDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
