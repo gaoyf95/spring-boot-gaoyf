@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -50,7 +49,7 @@ public class UserController {
      * @return 用户
      */
     @RequestMapping(value = "/getUserById2", method = RequestMethod.GET)
-    public User getUserById2(@Length(message = "id长度最大为32",max = 32) String id, @NotNull(message = "名称不能为空") String name) {
+    public User getUserById2(@Length(message = "id长度最大为32",max = 32) String id) {
         return userService.getUserById(id);
     }
 
